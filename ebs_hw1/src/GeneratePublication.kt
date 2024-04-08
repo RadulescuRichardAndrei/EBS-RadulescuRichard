@@ -5,9 +5,6 @@ import java.util.concurrent.Executors
 
 val companies = arrayOf("Google", "Facebook", "Amazon")
 
-private const val ITERATIONS = 1_000_000
-private const val POOLSIZE = 4
-
 fun initGeneratePub(iterations: Int, isCoroutine: Boolean, isThread: Boolean, poolsize: Int? ): Unit = runBlocking{
     val tupleConf1= ValueTupleConfig<String>(
         propertyName = "company",

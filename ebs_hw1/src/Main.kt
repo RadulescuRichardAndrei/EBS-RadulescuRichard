@@ -10,9 +10,9 @@ import javax.swing.JFrame
 import javax.swing.SwingUtilities
 import kotlin.system.measureTimeMillis
 
+private const val POOLSIZE = 4
 
-
-fun plotGeneratePubication(){
+fun plotGeneratePubication(function: (Int, Boolean, Boolean, Int?) -> Unit){
     var iterations= mutableListOf<Int>();
     var timeSimple= mutableListOf<Long>();
     var timeCoroutine= mutableListOf<Long>();
@@ -20,13 +20,14 @@ fun plotGeneratePubication(){
 
     for(iteration: Int in 10_000..1_000_000 step 10_000){
         var timeInMillis= measureTimeMillis {
-            initGeneratePub(iteration, false, false, null)
+            function(iteration, false, false, null)
+            //initGeneratePub(iteration, false, false, null)
         }
         var timeInMillis2= measureTimeMillis {
-            initGeneratePub(iteration, true, false, 72)
+            function(iteration, true, false, POOLSIZE)
         }
         var timeInMillis3= measureTimeMillis {
-            initGeneratePub(iteration, false, true, 72)
+            function(iteration, false, true, POOLSIZE)
         }
         iterations.add(iteration)
         timeSimple.add(timeInMillis)
@@ -66,5 +67,6 @@ fun plotGeneratePubication(){
     }
 }
 fun main() {
-    plotGeneratePubication()
+    //plotGeneratePubication(::initGeneratePub)
+    plotGeneratePubication(::intiGenerateSub)
 }
